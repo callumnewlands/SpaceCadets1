@@ -1,11 +1,6 @@
-import com.sun.istack.internal.NotNull;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.lang.UnsupportedOperationException;
-import java.util.ArrayList;
 
 public class Main 
 {
@@ -57,17 +52,25 @@ public class Main
 
 		//TODO catch IllegalArgumentException from findRegex()
 
-		String numberLine = page.getSourceCode(page.findRegex("\\d* found."));
-		int startIndex = numberLine.indexOf("found") - 2;
-		int endIndex = numberLine.indexOf(' ', startIndex);
-		int numberOfAnagrams = Integer.parseInt(numberLine.substring(startIndex, endIndex));
+		try
+		{
+			String numberLine = page.getSourceCode(page.findRegex("\\d* found."));
+			int startIndex = numberLine.indexOf("found") - 2;
+			int endIndex = numberLine.indexOf(' ', startIndex);
+			int numberOfAnagrams = Integer.parseInt(numberLine.substring(startIndex, endIndex));
 
-		System.out.println(numberOfAnagrams + " anagrams found...\n");
+			System.out.println(numberOfAnagrams + " anagrams found...\n");
 
-		int startLine = page.findRegex("Displaying all:") + 1;
+			int startLine = page.findRegex("Displaying all:") + 1;
 
-		for (int i = 0; i < numberOfAnagrams; i++)
-			System.out.println(HtmlPage.stripTags(page.getSourceCode(startLine + i)));
+			for (int i = 0; i < numberOfAnagrams; i++)
+				System.out.println(HtmlPage.stripTags(page.getSourceCode(startLine + i)));
+
+		}
+		catch (IllegalArgumentException e)
+		{
+			System.out.println(e.getMessage());
+		}
 
 	}
 
