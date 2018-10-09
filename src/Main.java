@@ -24,12 +24,10 @@ public class Main
 				default:
 					break;
 			}
-
-			System.out.println("\nPress [Enter] to continue...");
-			try { System.in.read(); } catch (IOException e) {} // Wait for enter press
-
+			PublicMethods.waitForEnter();
 		}
     }
+
 
 	/**
 	 * Gets and outputs possible anagrams for a string gotten from the user
@@ -50,8 +48,6 @@ public class Main
 			return;
 		}
 
-		//TODO catch IllegalArgumentException from findRegex()
-
 		try
 		{
 			String numberLine = page.getSourceCode(page.findRegex("\\d* found."));
@@ -69,7 +65,7 @@ public class Main
 		}
 		catch (IllegalArgumentException e)
 		{
-			System.out.println(e.getMessage());
+			System.out.println("Cannot determine anagrams from " + url);
 		}
 
 	}
@@ -109,10 +105,13 @@ public class Main
 	 * Searches a HtmlPage for the name of the person whom the page is about
 	 * @param page the HtmlPage to get the name from
 	 * @return the name of the person
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException if page is null, or name cannot be determined from given page
 	 */
 	private static String getName(HtmlPage page) throws IllegalArgumentException
 	{
+		if (page == null)
+			throw new IllegalArgumentException("HTMLPage cannot be null");
+
 		int lineNo;
 		try
 		{
@@ -162,9 +161,12 @@ public class Main
 			validInput = true;
 			displayMenu();
 			System.out.print("Enter choice number: ");
-			try (BufferedReader inputReader = new BufferedReader(new StreamReader(System.in))) {
+			try (BufferedReader inputReader = new BufferedReader(new StreamReader(System.in)))
+			{
 				return Integer.parseInt(inputReader.readLine());
-			} catch (IOException | NumberFormatException e) {
+			}
+			catch (IOException | NumberFormatException e)
+			{
 				System.out.println("Invalid Input \n");
 				validInput = false;
 			}

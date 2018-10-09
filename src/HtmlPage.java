@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HtmlPage {
+class HtmlPage {
 
 	private ArrayList<String> _sourceCode = new ArrayList<>();
 
-	public HtmlPage(String address) throws HtmlPageException
+	HtmlPage(String address) throws HtmlPageException
 	{
 		URL page;
 		try
@@ -41,7 +41,7 @@ public class HtmlPage {
 	 * @param code the line of code to strip tags from
 	 * @return the code without tags
 	 */
-	public static String stripTags(String code)
+	static String stripTags(String code)
 	{
 		Pattern tagPattern = Pattern.compile("<\\/?\\s*[^>]*>");
 		Matcher nameMatcher = tagPattern.matcher(code);
@@ -52,7 +52,7 @@ public class HtmlPage {
 	 * Gets a String containing the full source code of the HtmlPage, including new-line characters
 	 * @return the full source code as a String
 	 */
-	public String getSourceCode()
+	String getSourceCode()
 	{
 		String str = "";
 		for (int i = 0; i < _sourceCode.size(); i++)
@@ -66,9 +66,9 @@ public class HtmlPage {
 	 * Returns a particular line of the page's source code
 	 * @param lineNumber The 1-based index line number to return
 	 * @return A String containing the requested line
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException if given line number is outside bounds of array
 	 */
-	public String getSourceCode(int lineNumber) throws IllegalArgumentException
+	String getSourceCode(int lineNumber) throws IllegalArgumentException
 	{
 		if (lineNumber <= 0 || lineNumber > _sourceCode.size())
 			throw new IllegalArgumentException("Invalid Line Number");
@@ -80,9 +80,9 @@ public class HtmlPage {
 	 * Returns the line number of the first match with the given regular expression
 	 * @param regex The expression to match
 	 * @return The line number of the first match
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException if the expression cannot be found in the source code
 	 */
-	public int findRegex(String regex) throws IllegalArgumentException
+	int findRegex(String regex) throws IllegalArgumentException
 	{
 		Pattern nameSearch = Pattern.compile(regex);
 		int i = 0;

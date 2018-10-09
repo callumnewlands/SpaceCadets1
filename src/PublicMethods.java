@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class PublicMethods {
+class PublicMethods {
 
     /**
      * Gets a username from the user via stdin.
@@ -9,7 +9,7 @@ public class PublicMethods {
      * @param request The string to prompt the user with e.g. "Username: "
      * @return the inputted username
      */
-    public static String getString(String request)
+    static String getString(String request)
     {
         // Try with resources statement:
         // Automatic resource management = inputReader is closed automatically
@@ -25,7 +25,13 @@ public class PublicMethods {
         }
     }
     // Overloads getString() to simulate optional request parameter
-    private static String getString() { return getString(""); }
+    static String getString() { return getString(""); }
+
+    static void waitForEnter()
+    {
+        System.out.println("\nPress [Enter] to continue...");
+        try { System.in.read(); } catch (IOException e) {} // Wait for enter press
+    }
 
 }
 
