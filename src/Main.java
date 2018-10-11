@@ -18,13 +18,15 @@ public class Main
 				case 2:
 					anagrams();
 					break;
+
 				case 0:
 					exit = true;
 					break;
 				default:
 					break;
 			}
-			PublicMethods.waitForEnter();
+			if (!exit)
+				PublicMethods.waitForEnter();
 		}
     }
 
@@ -70,6 +72,7 @@ public class Main
 
 	}
 
+
 	/**
 	 * Gets an ECS username from the user, converts it to a name, and prints the name to the stdio
 	 */
@@ -95,11 +98,47 @@ public class Main
 		{
 			System.out.println(getName(page));
 		}
-		catch (IllegalArgumentException e)
+		catch (IllegalArgumentException e) // Catch error with not being able to extract name
+		{
+			System.out.println(e.getMessage());
+			/*String response = PublicMethods.getString(
+					"Would you like to try login into secure.ecs.soton.ac.uk to access private data? (\"Y\"/\"N\")");
+			if (response.toUpperCase().equals("Y"))
+			{
+				System.out.println();
+				nameFromUsernameSecure(username);
+			}*/
+		}
+	}
+
+
+	/*private static void nameFromUsernameSecure(String username)
+	{
+		//TODO: LOGIN
+
+		String address = "https://secure.ecs.soton.ac.uk/people/" + username;
+		HtmlPage page;
+
+		try
+		{
+			page = new HtmlPage(address);
+		}
+		catch (HtmlPageException e) // Catch error with opening the web page
+		{
+			System.out.println(e.getMessage());
+			return;
+		}
+
+		try
+		{
+			System.out.println(getName(page));
+		}
+		catch (IllegalArgumentException e) // Catch error with not being able to extract name
 		{
 			System.out.println(e.getMessage());
 		}
-	}
+
+	}*/
 
 	/**
 	 * Searches a HtmlPage for the name of the person whom the page is about
@@ -138,6 +177,7 @@ public class Main
 		}
 	}
 
+
 	/**
 	 * Displays the main menu for the application
 	 */
@@ -150,6 +190,7 @@ public class Main
 		System.out.println("    0. Exit");
 		System.out.println();
 	}
+
 
 	/**
 	 * Gets the user's choice for the main menu
