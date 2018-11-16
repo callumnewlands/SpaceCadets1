@@ -154,9 +154,6 @@ public class Main
 		int lineNo;
 		try
 		{
-
-			//TODO: replace RegEx expression with property="name">(.*)</h1 ==> group(1)?
-
 			lineNo = page.findRegex("property=\"name\">");
 		}
 		catch (IllegalArgumentException e) // Catch error with not being able to find "property="name">"
